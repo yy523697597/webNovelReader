@@ -41,7 +41,7 @@
 				</ul>
 				<ul class="nav-pannel-bg">
 					<li class="nav-pannel-label">背景</li>
-					<li class="bg-color bg-color-pink">粉</li>
+					<li class="bg-color bg-color-pink bg-color-active">粉</li>
 					<li class="bg-color bg-color-brown">棕</li>
 					<li class="bg-color bg-color-tan">褐</li>
 					<li class="bg-color bg-color-green">绿</li>
@@ -63,6 +63,15 @@
 		<script src="js/jquery.base64.js"></script>
 		<script src="js/jquery.jsonp.js"></script>
 		<script src="js/readerIndex.js"></script>
+		<script>
+			// 为背景颜色的同辈添加active
+
+			$($('.bg-color').on('click', function() {
+				$this = $(this);
+				$this.addClass('bg-color-active')
+					.siblings().removeClass('bg-color-active');
+			}));
+		</script>
 	</body>
 
 </html>
