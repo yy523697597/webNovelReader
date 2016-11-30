@@ -12,8 +12,12 @@
 
 	<body>
 		<div id="root" class="container">
-			<div id="top_nav" class="top-nav">
+			<div id="top_nav" class="top-nav display-none">
 				<div class="nav-title">返回书架</div>
+			</div>
+			<div class="m-article-action">
+				<div class="article-action-mid" id="article_action_mid">
+				</div>
 			</div>
 			<div id="fiction_chapter_title"></div>
 			<article id="fiction_container" class="m-reader-content">
@@ -33,7 +37,7 @@
 					<li id="next_button">下一章</li>
 				</ul>
 			</div>
-			<div id="nav_pannel" class="nav-pannel">
+			<div id="nav_pannel" class="nav-pannel display-none">
 				<ul class="nav-pannel-font">
 					<li class="nav-pannel-label">字号</li>
 					<li class="font-size-adjust-btn" id="large_font_btn">大</li>
@@ -48,10 +52,10 @@
 					<li class="bg-color bg-color-blue">蓝</li>
 				</ul>
 			</div>
-			<div id="foot_nav" class="foot-nav">
+			<div id="foot_nav" class="foot-nav display-none">
 				<ul>
 					<li class="foot-nav-catalogue">目录</li>
-					<li class="foot-nav-font">字体</li>
+					<li class="foot-nav-font" id="foot_nav_font">字体</li>
 					<li class="foot-nav-night">夜间</li>
 				</ul>
 			</div>
@@ -87,22 +91,32 @@
 			});
 
 			// 封装localStorage方法，避免别人误操作
-			var Util = (function() {
-				var prefix = 'html5_reader_';
-				var storageGetter = function(key) {
-					return localStorage.getItem(prefix + key);
-				}
-				var storageSetter = function(key) {
-					return localStorage.setItem(prefix + key);
-				}
-				return {
-					storageGetter: storageGetter,
-					storageSetter: StorageSetter
-				}
-			})();
-
+//			var Util = (function() {
+//				var prefix = 'html5_reader_';
+//				var storageGetter = function(key) {
+//					return localStorage.getItem(prefix + key);
+//				}
+//				var storageSetter = function(key) {
+//					return localStorage.setItem(prefix + key);
+//				}
+//				return {
+//					storageGetter: storageGetter,
+//					storageSetter: StorageSetter
+//				}
+//			})();
+			
+			var myModule ={
+				top_nav : $('#top_nav'),
+				foot_nav : $('#foot_nav'),
+				foot_nav_font:$('#foot_nav_font'),
+				nav_pannel:$('#nav_pannel'),
+				win	: $(window),
+				doc :$(document)
+			}
+			
 			function main() {
 				// 整个项目的入口函数
+				eventHandler();
 			}
 
 			function readerModel() {
@@ -115,7 +129,26 @@
 
 			function eventHandler() {
 				// 交互事件的绑定
+				
+				// 上下导航栏点击切换显示状态
+				$('#article_action_mid').on('click',function(){
+					myModule.top_nav.toggle();
+					myModule.foot_nav.toggle();
+				});
+				
+				//滚动页面隐藏上下导航栏和字体控制面板
+				myModule.win.scroll(function(){
+					myModule.top_nav.hide();
+					myModule.foot_nav.hide();
+					myModule.nav_pannel.hide();
+				});
+				
+				//点击导航下方字体切换字体控制面板
+				myModule.foot_nav_font.on('click',function(){
+					myModule.nav_pannel.toggle();
+				});
 			}
+			main();
 		</script>
 	</body>
 
