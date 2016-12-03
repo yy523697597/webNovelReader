@@ -33,25 +33,25 @@ $(function() {
 		nightIco: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkU2OUYzRUEwMjc4NzExRTU5RkYxQjg1Rjk2QkEyNzBEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjhBMzA2RjA2Mjc4QTExRTU5RkYxQjg1Rjk2QkEyNzBEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RTY5RjNFOUUyNzg3MTFFNTlGRjFCODVGOTZCQTI3MEQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RTY5RjNFOUYyNzg3MTFFNTlGRjFCODVGOTZCQTI3MEQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4v5YACAAAC/UlEQVR42tSaXYhNURTH97kzRnJ9ZTQzPh7IMEr5yshHEwkRkSeSjweEiMjDePTkhcKLPCApUV54GxTKcDM0JfL9QE0UGdcdEmb7L3edOq5zzz1nn332Pvdfv5e5Z9Zd666711577etIKYUGjQILwRwwDOwDfcKAamP873CwBawDrcABP8ACU87/FWUgIk3gKMjL/7VfwV4sojxcCw6AL9JfD0DGdABhv0KTwAUwO+CZvaBfGFaYAJaDyyAb8Mwt0CksKFPh9W3gWgXnSSeFJTkBZXQrOM3VJUi9oJErUGoysBKcCuE86YYt58sF0MILtiakjTvCojI+i/o876Zh9ThNARysUCr99NpmAN5FTAvxBRgS0QZlK5+GDLQrOC9sOu/NADVm70LU+9RmYJOi8yLigk8sgPUxbEy0HUATH0RUNdV2AG0hd9xyarMdwNyYNhaDOpsBTI5pYwRYYTMAHYtwh80ARmqws1ShBdEWwGAdGyI4HrMYKAegawFSMdhlo5XIK/ZAfvoO5oFukxn4oNHeID5DjzUZwCvNNsn5DjDOVADPErA7BdwF0xP2v4YCyCVknDJwjxe2k8AHT4O0VTSeawD9Mll1glZN48T5IMc+N7p/7JJm1AFWg4ERna4Da8F1j62cdzZKY5RZBtbcEuYzuAlugyfgOSjwyS7LJ8QJYJoojuuX+RycLnqPlPXgLZfBalCB11iveyL7CM6K6tEZURxp/jNWGc2pzFbBp98M3peOVXrA4Sr49I+4zpdmgDSA94UZKXX+ITeNP8sFIDg9XWBoypyni0O6THzqN1bx6iXYCH6nyHnyZXOp8+UCIF0Fe1LiPH1FdoMr/q8G74DbwS9pT/TeO+Nes64JuFpNUl+5fdByT9wMHhl0vhu06L7opobqEPiWoON9oJ0v1bXf1LuMAcdAQbPjJ6g9juqPE+PXKvVcbjeAmQqHFsmb5iVwzu1tVKYSOkpdA1jEU246To4XxZ/gZLlUU5v8CbzhI+x9bqV74r7xHwEGAPDRVwnecW5KAAAAAElFTkSuQmCC")'
 	}
 
-	// 初始化页面字体，使用本地储存的字体大小
+	// 调用本地存储的字体信息初始化页面字体大小
 	myModule.originalFontSize = parseInt(myModule.originalFontSize);
 	if (!myModule.originalFontSize) {
 		myModule.originalFontSize = 14;
 	}
 	$('#fiction_container').css('font-Size', myModule.originalFontSize + 'px');
 
-	// 初始化页面背景颜色和字体背景颜色,使用本地储存实现
+	// 调用本地存储的信息初始化页面字体颜色和背景颜色
 	$('#fiction_container').css({
 		'color': myModule.color,
 		'background-color': myModule.bg_color
 	});
 
-	// 初始化active按钮选择
+	// 调用本地存储的信息初始化背景选择列表的active
 	var active_bg = document.getElementById(myModule.active_id);
 	$(active_bg).addClass('bg-color-active')
 		.siblings().removeClass('bg-color-active');
 
-	// 初始化夜间按钮的背景颜色和文字
+	// 调用本地存储的信息初始化夜间按钮的背景颜色和文字
 	if (myModule.active_id === 'bg_color_blue') {
 		$('.foot-nav-night').html('日间')
 			.css('background-image', myModule.dayIco);
@@ -90,12 +90,12 @@ $(function() {
 			myModule.nav_pannel.hide();
 		});
 
-		// 点击导航下方字体切换字体控制面板
+		// 点击导航下方字体按钮切换字体控制面板
 		myModule.foot_nav_font.on('click', function() {
 			myModule.nav_pannel.toggle();
 		});
 
-		// 点击放大页面字体
+		// 点击字体-大按钮，放大页面字体
 		myModule.large_font_btn.on('click', function() {
 			// 最大只能放大到24px
 			if (myModule.originalFontSize > 24) {
@@ -107,7 +107,7 @@ $(function() {
 			Util.storageSetter('font_size', myModule.originalFontSize);
 		});
 
-		// 点击缩小页面字体
+		// 点击字体-小按钮缩小页面字体
 		myModule.small_font_btn.on('click', function() {
 			// 最小只能缩小到12px
 			if (myModule.originalFontSize < 12) {
@@ -119,7 +119,7 @@ $(function() {
 			Util.storageSetter('font_size', myModule.originalFontSize);
 		});
 
-		// 为选中背景颜色添加active，他的同辈移除active 
+		// 为选中背景颜色添加active，其的同辈移除active 
 		$('.bg-color').on('click', function() {
 			$this = $(this);
 			$this.addClass('bg-color-active')
@@ -127,7 +127,8 @@ $(function() {
 
 			// 存储被选中按钮的id到本地，用于页面初始化
 			Util.storageSetter('active_id', $(this).attr('id'));
-			// 如果点击日间主题，同时现在正处于夜间主题，那么就模拟夜间按钮也被点击了
+			
+			// 如果点击日间主题，同时现在正处于夜间主题，那么就切换夜间按钮的背景图片和文字
 			if ($this.attr('id') !== 'bg_color_blue' && $('.foot-nav-night').html() === '日间') {
 				$('.foot-nav-night').html('夜间')
 					.css('background-image', myModule.nightIco);;
@@ -135,7 +136,7 @@ $(function() {
 		});
 
 		
-		// 夜间按钮背景和文字切换
+		// 点击夜间按钮切换其背景图片和文字
 		$('.foot-nav-night').on('click', function() {
 					
 			if ($(this).html() === '夜间') {
@@ -144,6 +145,7 @@ $(function() {
 				$(this).html('日间').css('background-image', myModule.dayIco);
 				
 			} else {	
+				//在夜间主题下点击夜间按钮，切换会白天棕色主题
 				$('#bg_color_brown').click();
 				$(this).html('夜间').css('background-image', myModule.nightIco);
 			}						
@@ -196,6 +198,7 @@ $(function() {
 						'color': '#4E534F',
 						'background-color': '#0F1410'
 					});
+					
 					// 让夜间背景与夜间按钮联动
 					if ($('.foot-nav-night').html() === '夜间') {
 						$('.foot-nav-night').html('日间')
