@@ -144,23 +144,23 @@ body {
   text-indent: 9999px;
 }
 
-.bg-color-pink {
+#bg_color_pink {
   background-color: #F7EEE5;
 }
 
-.bg-color-brown {
+#bg_color_brown {
   background-color: #E9DFC7;
 }
 
-.bg-color-tan {
+#bg_color_tan {
   background-color: #A4A4A4;
 }
 
-.bg-color-green {
+#bg_color_green {
   background-color: #CDEFCE;
 }
 
-.bg-color-blue {
+#bg_color_blue {
   background-color: #283548;
 }
 
