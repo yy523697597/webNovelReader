@@ -9,23 +9,9 @@ $(function() {
 		var storageSetter = function(key, val) {
 			return localStorage.setItem(prefix + key, val);
 		}
-		var getJson = function(url, callback) {
-			return $.jsonp({
-				url: url,
-				cache: true,
-				callback: 'duokan_fiction_chapter',
-				success: function(result) {
-					var data = $.base64.decode(result);
-					// 使用escape对字符串进行编码
-					var json = decodeURIComponent(escape(data));
-					callback(data);
-				}
-			})
-		}
 		return {
 			storageGetter: storageGetter,
-			storageSetter: storageSetter,
-			getJson: getJson
+			storageSetter: storageSetter
 		}
 	})();
 
@@ -73,42 +59,13 @@ $(function() {
 
 	// 整个项目的入口函数
 	function main() {
-		var readerModel = ReaderModel();
-		readerModel.init();
+
 		eventHandler();
 	}
 
 	// 实现和阅读器相关的数据交互的方法
-	function ReaderModel() {
-		var chapter_id;
-		var init = function() {
-			getFictionInfo(function() {
-				getCurChapterContent(chapter_id, function() {
-					// TODO
-				});
-			})
-		}
-		var getChapterInfo = function(callback) {
-			$.get('data/chapter.json', function(data) {
-				// 获取章节信息之后的回调
-				chapter_id = data.chapters[1].chapter_id;
-				callback && callback();
-			}, 'json');
-		}
+	function readerModel() {
 
-		var getCurChapterContent = function(chapter_id) {
-			$.get('data/data' + chapter_id + 'json', function() {
-				if (data.result === 0) {
-					var url = data.jsonp;
-					Util.getJson(url, function(data) {
-						callback && callback(data);
-					});
-				}
-			}, 'json');
-		}
-		return {
-			init: init
-		}
 	}
 
 	// 渲染基本的UI结构
@@ -170,7 +127,7 @@ $(function() {
 
 			// 存储被选中按钮的id到本地，用于页面初始化
 			Util.storageSetter('active_id', $(this).attr('id'));
-
+			
 			// 如果点击日间主题，同时现在正处于夜间主题，那么就切换夜间按钮的背景图片和文字
 			if ($this.attr('id') !== 'bg_color_blue' && $('.foot-nav-night').html() === '日间') {
 				$('.foot-nav-night').html('夜间')
@@ -178,19 +135,20 @@ $(function() {
 			}
 		});
 
+		
 		// 点击夜间按钮切换其背景图片和文字
 		$('.foot-nav-night').on('click', function() {
-
+					
 			if ($(this).html() === '夜间') {
 				// 与夜间主题联动
 				$('#bg_color_blue').click();
 				$(this).html('日间').css('background-image', myModule.dayIco);
-
-			} else {
+				
+			} else {	
 				//在夜间主题下点击夜间按钮，切换会白天棕色主题
 				$('#bg_color_brown').click();
 				$(this).html('夜间').css('background-image', myModule.nightIco);
-			}
+			}						
 		})
 
 		// 背景颜色的切换,使用ul的事件委托实现
@@ -240,7 +198,7 @@ $(function() {
 						'color': '#4E534F',
 						'background-color': '#0F1410'
 					});
-
+					
 					// 让夜间背景与夜间按钮联动
 					if ($('.foot-nav-night').html() === '夜间') {
 						$('.foot-nav-night').html('日间')
