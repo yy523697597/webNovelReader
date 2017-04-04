@@ -1,12 +1,12 @@
-$(function() {
+$(function () {
 
 	// 封装localStorage方法，避免别人误操作
-	var Util = (function() {
+	var Util = (function () {
 		var prefix = 'html5_reader_';
-		var storageGetter = function(key) {
+		var storageGetter = function (key) {
 			return localStorage.getItem(prefix + key);
 		}
-		var storageSetter = function(key, val) {
+		var storageSetter = function (key, val) {
 			return localStorage.setItem(prefix + key, val);
 		}
 		return {
@@ -59,44 +59,112 @@ $(function() {
 
 	// 整个项目的入口函数
 	function main() {
-
-		eventHandler();
+		readerModel = ReaderModel();
+		readerUI = ReaderBaseFrame(Dom.ReadContent);
+		readerModel.init(function (data) {
+			readerUI(data);
+		});
+		EventHandler();
 	}
 
 	// 实现和阅读器相关的数据交互的方法
 	function readerModel() {
+		var Chapter_id;
+		var ChapterTotal;
+		var init = function (UIcallback) {
+			getFictionInfo(function () {
+				getCurChapterContent(Chapter_id, function (data) {
+					UIcallback && UIcallback(data)
+				})
+			})
+		};
+		var getFictionInfo = function (callback) {
+			$.get('data/chapter.json', function (data) {
+				/*获得章节信息的回调*/
+				Chapter_id = data.chapters[2].chapter_id;
+				ChapterTotal = data.chapters.length;
+				callback && callback();
+			}, "json");
+		};
+
+		var getCurChapterContent = function (chapter_id, callback) {
+			$.get('data/data' + chapter_id + '.json', function (data) {
+				/*获得章节数据的回调*/
+				if (data.result == 0) {
+					var url = data.jsonp;
+					Util.getBSONP(url, function (data) {
+						callback && callback(data);
+					});
+				}
+			}, "json")
+		};
+		var prevChapter = function (UIcallback) {
+			Chapter_id = parseInt(Chapter_id, 10);
+			if (Chapter_id == 0) {
+				return
+			}
+			Chapter_id -= 1;
+
+			getCurChapterContent(Chapter_id, UIcallback);
+		};
+		var nextChapter = function (UIcallback) {
+			Chapter_id = parseInt(Chapter_id, 10);
+			if (Chapter_id == ChapterTotal) {
+				return
+			}
+			Chapter_id += 1;
+
+			getCurChapterContent(Chapter_id, UIcallback);
+
+		};
+		return {
+			init: init,
+			prevChapter: prevChapter,
+			nextChapter: nextChapter
+		}
 
 	}
 
 	// 渲染基本的UI结构
 	function readerBaseFrame() {
-
+		/*初始化基本的UI结构*/
+		function parseChapterData(jsonData) {
+			var jasonObj = JSON.parse(jsonData);
+			var html = '<h4>' + jasonObj.t + '</h4>';
+			for (var i = 0; i < jasonObj.p.length; i++) {
+				html += '<p>' + jasonObj.p[i] + '</p>';
+			}
+			return html;
+		}
+		return function (data) {
+			container.html(parseChapterData(data));
+		}
 	}
 
 	// 交互事件的绑定
 	function eventHandler() {
 
 		// 点击页面主体切换上下导航栏显示状态
-		$('#article_action_mid').on('click', function() {
+		$('#article_action_mid').on('click', function () {
 			myModule.top_nav.toggle();
 			myModule.foot_nav.toggle();
 			myModule.nav_pannel.hide();
 		});
 
 		// 滚动页面隐藏上下导航栏和字体控制面板
-		myModule.win.scroll(function() {
+		myModule.win.scroll(function () {
 			myModule.top_nav.hide();
 			myModule.foot_nav.hide();
 			myModule.nav_pannel.hide();
 		});
 
 		// 点击导航下方字体按钮切换字体控制面板
-		myModule.foot_nav_font.on('click', function() {
+		myModule.foot_nav_font.on('click', function () {
 			myModule.nav_pannel.toggle();
 		});
 
 		// 点击字体-大按钮，放大页面字体
-		myModule.large_font_btn.on('click', function() {
+		myModule.large_font_btn.on('click', function () {
 			// 最大只能放大到24px
 			if (myModule.originalFontSize > 24) {
 				return;
@@ -108,7 +176,7 @@ $(function() {
 		});
 
 		// 点击字体-小按钮缩小页面字体
-		myModule.small_font_btn.on('click', function() {
+		myModule.small_font_btn.on('click', function () {
 			// 最小只能缩小到12px
 			if (myModule.originalFontSize < 12) {
 				return;
@@ -120,14 +188,14 @@ $(function() {
 		});
 
 		// 为选中背景颜色添加active，其的同辈移除active 
-		$('.bg-color').on('click', function() {
+		$('.bg-color').on('click', function () {
 			$this = $(this);
 			$this.addClass('bg-color-active')
 				.siblings().removeClass('bg-color-active');
 
 			// 存储被选中按钮的id到本地，用于页面初始化
 			Util.storageSetter('active_id', $(this).attr('id'));
-			
+
 			// 如果点击日间主题，同时现在正处于夜间主题，那么就切换夜间按钮的背景图片和文字
 			if ($this.attr('id') !== 'bg_color_blue' && $('.foot-nav-night').html() === '日间') {
 				$('.foot-nav-night').html('夜间')
@@ -135,24 +203,24 @@ $(function() {
 			}
 		});
 
-		
+
 		// 点击夜间按钮切换其背景图片和文字
-		$('.foot-nav-night').on('click', function() {
-					
+		$('.foot-nav-night').on('click', function () {
+
 			if ($(this).html() === '夜间') {
 				// 与夜间主题联动
 				$('#bg_color_blue').click();
 				$(this).html('日间').css('background-image', myModule.dayIco);
-				
-			} else {	
+
+			} else {
 				//在夜间主题下点击夜间按钮，切换会白天棕色主题
 				$('#bg_color_brown').click();
 				$(this).html('夜间').css('background-image', myModule.nightIco);
-			}						
+			}
 		})
 
 		// 背景颜色的切换,使用ul的事件委托实现
-		$('#nav_pannel_bg').on('click', 'li', function(event) {
+		$('#nav_pannel_bg').on('click', 'li', function (event) {
 			var $target = event.target;
 			var $fiction_container = $('#fiction_container')
 
@@ -198,7 +266,7 @@ $(function() {
 						'color': '#4E534F',
 						'background-color': '#0F1410'
 					});
-					
+
 					// 让夜间背景与夜间按钮联动
 					if ($('.foot-nav-night').html() === '夜间') {
 						$('.foot-nav-night').html('日间')
